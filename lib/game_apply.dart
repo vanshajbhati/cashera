@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frentic/api/AppUrlConstant.dart';
+import 'package:frentic/api/sharedprefrence.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'newslist.dart';
 import 'package:frentic/Home.dart';
@@ -16,6 +18,8 @@ class GameApply extends StatefulWidget {
 
 
 
+
+
   GameApply(this.Id,
       this.title,
       this.url);
@@ -23,6 +27,10 @@ class GameApply extends StatefulWidget {
   @override
   _GameApplyState createState() => _GameApplyState();
 }
+
+
+
+
 
 class _GameApplyState extends State<GameApply> {
   var rs;
@@ -32,9 +40,16 @@ class _GameApplyState extends State<GameApply> {
 
   void initState() {
     getData();
+    create_url();
 
     super.initState();
   }
+
+
+
+
+
+
 
   Widget build(BuildContext context) {
     final size = MediaQuery
@@ -524,7 +539,22 @@ class _GameApplyState extends State<GameApply> {
 
   getData() async {
 
-
   }
 
+
+
+  create_url() async{
+
+  final String publisherId =  await SharedPrefManager.getPrefrenceString('publisherId');
+
+
+  print("publisher ID ---------->:>>>>>>>>>>> "+ publisherId);
+
+
+  print(AppUrlConstant.baseUrl3rd+widget.Id+"&pub_id="+publisherId);
+
+
+
+
+}
 }

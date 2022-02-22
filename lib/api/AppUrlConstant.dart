@@ -8,6 +8,8 @@ class AppUrlConstant{
 
   ///////////////////////Api End point//////////////////////////
 
+  static String baseUrl3rd = "https://trk.mediadel.in/click?campaign_id=";
+
   static String loginApi = "set_verify_otp";
 
   static String verifyOtpApi = "verify_otp";

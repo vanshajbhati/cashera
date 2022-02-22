@@ -644,6 +644,24 @@ class _Home1State extends State<Home1> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
+                                                Container(
+                                                  height:60,
+                                                  child: CircleAvatar(
+                                                    radius: 40,
+                                                  backgroundImage: NetworkImage(
+                                                    response.data['campaigns'][index]['thumbnail'].toString(),
+                                                  ),
+
+
+                                                  ),
+                                                ),
+                                                Text(
+                                                  response.data['campaigns'][index]['payouts'][0]['payout'].toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20
+                                                  ),),
                                                 Text(
                                                   response.data['campaigns'][index]['currency'].toString(),
                                                   textAlign: TextAlign.center,
@@ -665,7 +683,7 @@ class _Home1State extends State<Home1> {
                                                                       50))),
                                                           onPressed: () {
                                                             print('onTapped launched');
-                                                            _launchUrl(response.data['campaigns'][index]['previewUrl']);
+                                                            _launchUrl(response.data['campaigns'][index]['url']);
                                                           },
                                                           child: Text("Apply Now",style: TextStyle(color:Colors.black),)),
 
@@ -847,7 +865,7 @@ class _Home1State extends State<Home1> {
 
 
     response = await dio.get(
-        'https://api.trackier.com/v2/campaigns?apiKey=61eea1a4445e29fb98cefbc3b5461eea1a444613');
+        'https://api.trackier.com/v2/campaigns?apiKey=6200eac1aeccb61d3d6700a8a126200eac1aed04');
 
     print(response.data['campaigns'][0]['id']);
 

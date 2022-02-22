@@ -12,4 +12,5 @@ class AppConstant{
   static final String TOKEN = "token";
   static final String SELECTCOUNTRY = "SELECTCOUNTRY";
   static final String SEARCHNAME = "SEARCHNAME";
+
 }
