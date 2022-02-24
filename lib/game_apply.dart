@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:frentic/api/AppUrlConstant.dart';
 import 'package:frentic/api/sharedprefrence.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,6 +16,8 @@ class GameApply extends StatefulWidget {
   final String Id;
   final String title;
   final String url;
+   var text;
+  final String payout;
 
 
 
@@ -22,7 +25,9 @@ class GameApply extends StatefulWidget {
 
   GameApply(this.Id,
       this.title,
-      this.url);
+      this.url,
+      this.text,
+      this.payout);
 
   @override
   _GameApplyState createState() => _GameApplyState();
@@ -169,13 +174,23 @@ class _GameApplyState extends State<GameApply> {
                                           padding: EdgeInsets.fromLTRB(
                                               size2 / 4, size1 / 8, 0, 0),
                                           child: Text(
-                                            "Total Reward = 0",
+                                            "Total Reward = "+widget.payout,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.green,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              size2 / 10, size1 / 6, 0, 0),
+                                          child: Container(
+                                            width: 300,
+                                            child: Html(
+                                              data: widget.text,
+                                            )
+                                          ),
+                                          ),
 
 
                                         Padding(
@@ -341,7 +356,7 @@ class _GameApplyState extends State<GameApply> {
                                           padding: EdgeInsets.fromLTRB(
                                               size2 / 4, size1 / 8, 0, 0),
                                           child: Text(
-                                            "Total Reward = "+responseNew.data['goals'][0]['payouts'][0]['currency']+" "+TotalReward.toString(),
+                                            "Total Reward = "+responseNew.data['goals'][0]['payouts'][0]['currency']+" "+widget.payout,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.green,
@@ -349,6 +364,16 @@ class _GameApplyState extends State<GameApply> {
                                           ),
                                         ),
 
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              size2 / 10, size1 / 6, 0, 0),
+                                          child: Container(
+                                              width: 300,
+                                              child: Html(
+                                                data: widget.text,
+                                              )
+                                          ),
+                                        ),
 
                                         Padding(
                                             padding: EdgeInsets.fromLTRB(

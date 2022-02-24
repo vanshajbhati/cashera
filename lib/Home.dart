@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frentic/api/apiManager.dart';
 import 'package:frentic/api/apiresponse/responsefetchbrans.dart';
@@ -8,6 +9,7 @@ import 'package:frentic/api/apiresponse/responseslider.dart';
 import 'package:frentic/api/campaignsFetch.dart';
 
 import 'package:frentic/api/sharedprefrence.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,6 +37,9 @@ class _Home1State extends State<Home1> {
 
   var response;
   var responses;
+  var text;
+
+  List<String> textList;
 
 
 
@@ -591,12 +596,20 @@ class _Home1State extends State<Home1> {
 
                                       return GestureDetector(
                                         onTap: () {
+
+
+                                         runDecode(index);
+
+
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) => GameApply(response.data['campaigns'][index]['id'].toString(),
                                                       response.data['campaigns'][index]['title'].toString(),
-                                                      response.data['campaigns'][index]['previewUrl'].toString())));
+                                                      response.data['campaigns'][index]['previewUrl'].toString(),
+                                                      text,
+                                                      response.data['campaigns'][index]['payouts'][0]['payout'].toString()
+                                                  )));
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(0.0),
@@ -655,20 +668,28 @@ class _Home1State extends State<Home1> {
 
                                                   ),
                                                 ),
-                                                Text(
-                                                  response.data['campaigns'][index]['payouts'][0]['payout'].toString(),
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),),
-                                                Text(
-                                                  response.data['campaigns'][index]['currency'].toString(),
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      response.data['campaigns'][index]['payouts'][0]['payout'].toString(),
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 20
+                                                      ),),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(
+                                                      response.data['campaigns'][index]['currency'].toString(),
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 20
+                                                      ),),
+                                                  ],
+                                                ),
+
                                                 Container(
                                                   child: Column(
                                                     children: [
@@ -708,6 +729,8 @@ class _Home1State extends State<Home1> {
                                                     ],
 
                                                   ),
+
+
 
 
 
@@ -872,6 +895,8 @@ class _Home1State extends State<Home1> {
 
 
 
+
+
     return Future.value("Data download successfully"); // return your response
   }
 
@@ -881,6 +906,17 @@ class _Home1State extends State<Home1> {
       responses = response;
     });}
 
+    runDecode( int index){
+
+      print(response.data['campaigns'][1]['description']);
+
+      print("#######################################################################################");
+
+      var unescape = HtmlUnescape();
+      text = unescape.convert(response.data['campaigns'][index]['description']);
+      print(text);
+
+    }
 
   }
 
